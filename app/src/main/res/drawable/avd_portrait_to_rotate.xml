@@ -1,0 +1,95 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="portrait_to_rotate"
+            android:width="@dimen/imgbtn_drawable_size"
+            android:height="@dimen/imgbtn_drawable_size"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <group
+                android:name="arrows_top"
+                android:pivotX="12"
+                android:pivotY="12">
+                <path
+                    android:name="portrait_top"
+                    android:pathData="M 17 1.01 C 13.667 1.007 10.333 1.003 7 1 C 5.9 1 5.01 1.9 5.01 3 L 19 3 C 19 1.9 18.1 1.01 17 1.01"
+                    android:fillColor="#000"
+                    android:strokeWidth="1"/>
+            </group>
+            <group
+                android:name="arrows_bottom"
+                android:pivotX="12"
+                android:pivotY="12">
+                <path
+                    android:name="portrait_bottom"
+                    android:pathData="M 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 5.01 21"
+                    android:fillColor="#000"
+                    android:strokeWidth="1"/>
+            </group>
+            <group android:name="screen_central">
+                <path
+                    android:name="portrait"
+                    android:pathData="M 17 1.01 L 7 1 C 5.9 1 5.01 1.9 5.01 3 L 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 19 3 C 19 1.9 18.1 1.01 17 1.01 Z M 17 19 L 7 19 L 7 5 L 17 5 L 17 19 Z"
+                    android:fillColor="#000"
+                    android:strokeWidth="1"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="arrows_top">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="rotation"
+                android:duration="@android:integer/config_mediumAnimTime"
+                android:valueFrom="0"
+                android:valueTo="-135"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="arrows_bottom">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="rotation"
+                android:duration="@android:integer/config_mediumAnimTime"
+                android:valueFrom="0"
+                android:valueTo="-135"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="portrait_top">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="@android:integer/config_mediumAnimTime"
+                android:valueFrom="M 19 3 C 19 1.9 18.1 1.01 17 1.01 C 13.667 1.007 10.333 1.003 7 1 C 5.9 1 5.01 1.9 5.01 3 L 9 3 L 12 3 C 14.294 3 16.647 3 19 3"
+                android:valueTo="M 18.682 3.904 C 19.036 3.55 19.389 3.197 19.743 2.843 C 15.026 -1.152 7.962 -0.933 3.515 3.515 C 3.366 3.678 3.218 3.84 3.069 4.003 L 8.457 4.003 L 8.464 2.129 C 11.866 0.905 15.769 1.499 18.682 3.904"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="portrait_bottom">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="@android:integer/config_mediumAnimTime"
+                android:valueFrom="M 7 23 C 10.333 23 13.667 23 17 23 C 18.1 23 19 22.1 19 21 L 15 21 L 12 21 C 9.153 21 7.081 21 5.01 21 C 5.01 22.1 5.9 23 7 23"
+                android:valueTo="M 4.257 21.157 C 8.974 25.152 16.038 24.933 20.485 20.485 C 20.634 20.322 20.782 20.16 20.931 19.997 L 15.543 19.997 L 15.536 21.871 C 12.127 23.087 8.231 22.501 5.318 20.096 C 4.964 20.45 4.611 20.803 4.257 21.157"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="portrait">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="@android:integer/config_mediumAnimTime"
+                android:valueFrom="M 17 19 L 7 19 L 7 5 L 17 5 Z M 17 1.01 L 7 1 C 5.9 1 5.01 1.9 5.01 3 L 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 19 3 C 19 1.9 18.1 1.01 17 1.01 Z"
+                android:valueTo="M 21.19 14.83 L 14.83 21.19 L 2.81 9.17 L 9.17 2.81 Z M 8.11 1.75 L 1.75 8.11 C 1.16 8.7 1.16 9.65 1.75 10.23 L 13.77 22.25 C 14.36 22.84 15.31 22.84 15.89 22.25 L 22.25 15.89 C 22.84 15.3 22.84 14.35 22.25 13.77 L 10.23 1.75 C 9.64 1.16 8.69 1.16 8.11 1.75 Z"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

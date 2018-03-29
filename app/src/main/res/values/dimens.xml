@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardview_margins">8dp</dimen>
+    <dimen name="cardview_corner_radius">0dp</dimen>
+
+    <dimen name="primary_text_size">16sp</dimen>
+    <dimen name="secondary_text_size">14sp</dimen>
+
+    <dimen name="imgbtn_drawable_size">36dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_spacer">64dp</dimen>
+</resources>

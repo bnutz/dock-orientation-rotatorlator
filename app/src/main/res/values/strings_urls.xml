@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url_tweet">https://twitter.com/brian_nutz/</string>
+    <string name="url_play_store">https://play.google.com/store/apps/developer?id=just.B.Nutz</string>
+    <string name="url_open_source">https://github.com/bnutz/dock-orientation-rotatorlator</string>
+</resources>

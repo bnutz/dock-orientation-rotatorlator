@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Dock Orientation Rotatorlator</string>
+
+    <string name="notification_channel_name">Rotatorlator Monitoring Service</string>
+
+    <string name="lbl_monitoring_toggle">Monitor Dock Status</string>
+    <string name="lbl_status_blank">---</string>
+
+    <string name="lbl_current_port_status">Current Dock Status: </string>
+    <string name="lbl_status_unplugged">Unplugged</string>
+    <string name="lbl_status_plugged">Plugged-in</string>
+    <string name="lbl_status_wireless">Wirelessly charging</string>
+
+    <string name="lbl_current_orientation_status">Current Rotation Setting: </string>
+    <string name="lbl_status_no_change">Do nothing</string>
+    <string name="lbl_status_portrait">Portrait</string>
+    <string name="lbl_status_auto_rotate">Auto-rotate</string>
+
+    <string name="lbl_setting_unplugged">When Unplugged:</string>
+    <string name="lbl_setting_plugged">When Plugged-in:</string>
+    <string name="lbl_setting_wireless">Wirelessly Charging:</string>
+
+    <string name="btn_stop_monitoring">Stop Monitoring</string>
+
+    <string name="mnu_show_wireless_options">Show Wireless Option</string>
+    <string name="mnu_contact">Tweet @Brian_Nutz</string>
+    <string name="mnu_play_store">Play Store</string>
+    <string name="mnu_open_source">Source Code</string>
+    <string name="mnu_licences">Licences</string>
+</resources>

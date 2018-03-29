@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "layers": {
+    "vectorLayer": {
+      "id": "166460",
+      "name": "portrait_to_rotate",
+      "type": "vector",
+      "children": [
+        {
+          "id": "166461",
+          "name": "arrows_top",
+          "type": "group",
+          "pivotX": 12,
+          "pivotY": 12,
+          "children": [
+            {
+              "id": "166462",
+              "name": "portrait_top",
+              "type": "path",
+              "pathData": "M 17 1.01 C 13.667 1.007 10.333 1.003 7 1 C 5.9 1 5.01 1.9 5.01 3 L 19 3 C 19 1.9 18.1 1.01 17 1.01",
+              "fillColor": "#000",
+              "strokeWidth": 1
+            }
+          ]
+        },
+        {
+          "id": "166463",
+          "name": "arrows_bottom",
+          "type": "group",
+          "pivotX": 12,
+          "pivotY": 12,
+          "children": [
+            {
+              "id": "166464",
+              "name": "portrait_bottom",
+              "type": "path",
+              "pathData": "M 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 5.01 21",
+              "fillColor": "#000",
+              "strokeWidth": 1
+            }
+          ]
+        },
+        {
+          "id": "188256",
+          "name": "screen_central",
+          "type": "group",
+          "children": [
+            {
+              "id": "188366",
+              "name": "portrait",
+              "type": "path",
+              "pathData": "M 17 1.01 L 7 1 C 5.9 1 5.01 1.9 5.01 3 L 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 19 3 C 19 1.9 18.1 1.01 17 1.01 Z M 17 19 L 7 19 L 7 5 L 17 5 L 17 19 Z",
+              "fillColor": "#000",
+              "strokeWidth": 1
+            }
+          ]
+        }
+      ]
+    },
+    "hiddenLayerIds": [
+      "166467"
+    ]
+  },
+  "timeline": {
+    "animation": {
+      "id": "166468",
+      "name": "anim",
+      "duration": 300,
+      "blocks": [
+        {
+          "id": "166469",
+          "layerId": "166461",
+          "propertyName": "rotation",
+          "startTime": 50,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": -135
+        },
+        {
+          "id": "166470",
+          "layerId": "166463",
+          "propertyName": "rotation",
+          "startTime": 50,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": 0,
+          "toValue": -135
+        },
+        {
+          "id": "166471",
+          "layerId": "166462",
+          "propertyName": "pathData",
+          "startTime": 0,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "path",
+          "fromValue": "M 19 3 C 19 1.9 18.1 1.01 17 1.01 C 13.667 1.007 10.333 1.003 7 1 C 5.9 1 5.01 1.9 5.01 3 L 9 3 L 12 3 C 14.294 3 16.647 3 19 3",
+          "toValue": "M 18.682 3.904 C 19.036 3.55 19.389 3.197 19.743 2.843 C 15.026 -1.152 7.962 -0.933 3.515 3.515 C 3.366 3.678 3.218 3.84 3.069 4.003 L 8.457 4.003 L 8.464 2.129 C 11.866 0.905 15.769 1.499 18.682 3.904"
+        },
+        {
+          "id": "166472",
+          "layerId": "166464",
+          "propertyName": "pathData",
+          "startTime": 0,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "path",
+          "fromValue": "M 7 23 C 10.333 23 13.667 23 17 23 C 18.1 23 19 22.1 19 21 L 15 21 L 12 21 C 9.153 21 7.081 21 5.01 21 C 5.01 22.1 5.9 23 7 23",
+          "toValue": "M 4.257 21.157 C 8.974 25.152 16.038 24.933 20.485 20.485 C 20.634 20.322 20.782 20.16 20.931 19.997 L 15.543 19.997 L 15.536 21.871 C 12.127 23.087 8.231 22.501 5.318 20.096 C 4.964 20.45 4.611 20.803 4.257 21.157"
+        },
+        {
+          "id": "188383",
+          "layerId": "188366",
+          "propertyName": "pathData",
+          "startTime": 0,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "path",
+          "fromValue": "M 17 19 L 7 19 L 7 5 L 17 5 Z M 17 1.01 L 7 1 C 5.9 1 5.01 1.9 5.01 3 L 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 19 3 C 19 1.9 18.1 1.01 17 1.01 Z",
+          "toValue": "M 21.19 14.83 L 14.83 21.19 L 2.81 9.17 L 9.17 2.81 Z M 8.11 1.75 L 1.75 8.11 C 1.16 8.7 1.16 9.65 1.75 10.23 L 13.77 22.25 C 14.36 22.84 15.31 22.84 15.89 22.25 L 22.25 15.89 C 22.84 15.3 22.84 14.35 22.25 13.77 L 10.23 1.75 C 9.64 1.16 8.69 1.16 8.11 1.75 Z"
+        }
+      ]
+    }
+  }
+}

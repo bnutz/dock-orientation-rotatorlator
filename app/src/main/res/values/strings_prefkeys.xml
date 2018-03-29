@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prefkey_enable_dock_monitor">prefkey_enable_dock_monitor</string>
+    <string name="prefkey_set_autorotate_unplugged">prefkey_set_autorotate_unplugged</string>
+    <string name="prefkey_set_autorotate_plugged">prefkey_set_autorotate_plugged</string>
+    <string name="prefkey_set_autorotate_wireless">prefkey_set_autorotate_wireless</string>
+    <string name="prefkey_show_wireless_options">prefkey_show_wireless_options</string>
+</resources>

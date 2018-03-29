@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.justbnutz.dockorientationrotatorlator"
+    >
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions"
+        />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        >
+        <!-- Splash Screen Activity, the gatekeeper -->
+        <activity
+            android:name="com.justbnutz.dockorientationrotatorlator.ActivitySplashScreen"
+            android:theme="@style/SplashTheme"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main Activity -->
+        <activity
+            android:name="com.justbnutz.dockorientationrotatorlator.ActivityRotatorlator"
+            android:launchMode="singleInstance"
+            />
+
+        <!-- Device-Wide Broadcast Receiver (For Pre-Oreo devices) -->
+        <receiver android:name="com.justbnutz.dockorientationrotatorlator.ReceiverPortStatus">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.ACTION_DOCK_EVENT"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Services -->
+        <service android:name="com.justbnutz.dockorientationrotatorlator.ServicePortStatusHandler" />
+
+        <!-- Making absolutely sure Open Source licence views have Action Bars - https://medium.com/@jokatavr/how-to-use-android-open-source-notices-299a0635b5c2 -->
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            />
+    </application>
+
+</manifest>

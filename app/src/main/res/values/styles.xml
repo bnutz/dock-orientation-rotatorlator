@@ -1,0 +1,60 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Splash Screen Theme -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <!-- Base Style for CardView-ish Lists -->
+    <style name="CardListStyle" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/cardview_margins</item>
+        <item name="cardBackgroundColor">@color/cardview_light_background</item>
+        <item name="cardCornerRadius">@dimen/cardview_corner_radius</item>
+    </style>
+
+    <!-- Base TextView Style for Status Label Headers -->
+    <style name="TextViewStatusHeaderStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/cardview_margins</item>
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+    </style>
+
+    <!-- Base TextSwitcher Style -->
+    <style name="TextSwitcherStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/cardview_margins</item>
+        <item name="android:inAnimation">@anim/textswitcher_in</item>
+        <item name="android:outAnimation">@anim/textswitcher_out</item>
+    </style>
+
+    <!-- Base Style for TextViews inside the TextSwitchers -->
+    <style name="StatusLabelTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Base TextView Style for Toggle Label Headers -->
+    <style name="TextViewToggleHeaderStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_margin">@dimen/cardview_margins</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/primary_text_size</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">start</item>
+    </style>
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/mnu_licences"
+        android:title="@string/mnu_licences"
+        android:icon="@drawable/ic_subject_black"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/mnu_open_source"
+        android:title="@string/mnu_open_source"
+        android:icon="@drawable/ic_code_black"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/mnu_play_store"
+        android:title="@string/mnu_play_store"
+        android:icon="@drawable/ic_play_box_outline_black"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/mnu_contact"
+        android:title="@string/mnu_contact"
+        android:icon="@drawable/ic_twitter_box_black"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/mnu_show_wireless_state"
+        android:checkable="true"
+        android:title="@string/mnu_show_wireless_options"
+        android:icon="@drawable/ic_tap_and_play_black"
+        app:showAsAction="never"
+        />
+</menu>
