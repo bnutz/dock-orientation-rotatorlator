@@ -34,4 +34,10 @@
         android:icon="@drawable/ic_tap_and_play_black"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/mnu_show_test_panel"
+        android:title="@string/mnu_show_test_panel"
+        android:icon="@drawable/ic_assignment_black"
+        app:showAsAction="never"
+        />
 </menu>

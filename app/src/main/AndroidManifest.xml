@@ -35,6 +35,12 @@
             android:launchMode="singleInstance"
             />
 
+        <!-- Test Panel Activity -->
+        <activity
+            android:name=".ActivityTestPanel"
+            android:launchMode="singleInstance"
+            />
+
         <!-- Device-Wide Broadcast Receiver (For Pre-Oreo devices) -->
         <receiver android:name="com.justbnutz.dockorientationrotatorlator.ReceiverPortStatus">
             <intent-filter>

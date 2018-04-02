@@ -38,7 +38,7 @@ public class ActivityRotatorlator extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(
-                        R.id.coord_fragment_container,
+                        R.id.frame_fragment_container,
                         FragmentRotatorlatorConfigurator.newInstance(),
                         FragmentRotatorlatorConfigurator.TAG
                 )
@@ -62,32 +62,39 @@ public class ActivityRotatorlator extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.mnu_show_wireless_state:
-                // Toggle the Wireless Charging option visibility
-                toggleWirelessPanel();
+            case R.id.mnu_licences:
+                // Launch licences Activity
+                startActivity(
+                        new Intent(this, OssLicensesMenuActivity.class)
+                );
                 return true;
 
-            case R.id.mnu_contact:
-                runLink(getString(R.string.url_tweet));
+            case R.id.mnu_open_source:
+                runLink(getString(R.string.url_open_source));
                 return true;
 
             case R.id.mnu_play_store:
                 runLink(getString(R.string.url_play_store));
                 return true;
 
-            case R.id.mnu_open_source:
-                runLink(getString(R.string.url_open_source));
+            case R.id.mnu_contact:
+                runLink(getString(R.string.url_tweet));
                 return true;
-            case R.id.mnu_licences:
-                // Launch licences Activity
+
+            case R.id.mnu_show_wireless_state:
+                // Toggle the Wireless Charging option visibility
+                toggleWirelessPanel();
+                return true;
+
+            case R.id.mnu_show_test_panel:
+                // Launch Test Panel Activity
                 startActivity(
-                        new Intent(
-                                this, OssLicensesMenuActivity.class
-                        )
+                        new Intent(this, ActivityTestPanel.class)
                 );
                 return true;
 

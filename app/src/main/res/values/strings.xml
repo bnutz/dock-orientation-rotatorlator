@@ -22,9 +22,10 @@
 
     <string name="btn_stop_monitoring">Stop Monitoring</string>
 
-    <string name="mnu_show_wireless_options">Show Wireless Option</string>
-    <string name="mnu_contact">Tweet @Brian_Nutz</string>
-    <string name="mnu_play_store">Play Store</string>
-    <string name="mnu_open_source">Source Code</string>
     <string name="mnu_licences">Licences</string>
+    <string name="mnu_open_source">Source Code</string>
+    <string name="mnu_play_store">Play Store</string>
+    <string name="mnu_contact">Tweet @Brian_Nutz</string>
+    <string name="mnu_show_wireless_options">Show Wireless Option</string>
+    <string name="mnu_show_test_panel">Show Test Panel</string>
 </resources>

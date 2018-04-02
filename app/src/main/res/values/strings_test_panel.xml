@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbl_os_build_version">OS Build Version: </string>
+    <string name="lbl_can_write_system_settings">System Settings Permission: </string>
+    <string name="lbl_dock_state">Dock State: </string>
+    <string name="lbl_battery_state">Battery State: </string>
+    <string name="lbl_rotation_accelerometer">Accelerometer Rotation: </string>
+    <string name="lbl_rotation_user">User Rotation: </string>
+    <string name="lbl_test_intro">Take the device on and off power a couple of times (docking
+        &amp; undocking, plugging &amp; unplugging the power cable, etc.); the actions should
+        produce some output in the window below… hopefully…
+    </string>
+    <string name="lbl_log_hint">Dock change events…\n</string>
+
+    <string name="mnu_show_battery_changed">Show BATTERY_CHANGED events</string>
+    <string name="toast_log_copied">Diagnostics copied to clipboard</string>
+</resources>

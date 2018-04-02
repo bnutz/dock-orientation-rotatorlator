@@ -1,9 +1,9 @@
 0:46 design
-47:46 appcompat-v7
-94:46 cardview-v7
-141:47 play-services-oss-licenses
-189:47 play-services-basement
-237:46 support-v4
+47:47 play-services-oss-licenses
+95:47 play-services-basement
+143:46 support-v4
+190:46 appcompat-v7
+237:46 cardview-v7
 284:46 support-fragment
 331:46 animated-vector-drawable
 378:46 recyclerview-v7
@@ -15,22 +15,22 @@
 660:46 support-compat
 707:46 support-annotations
 754:252 tz database
-1007:1732 Protobuf Nano
-2740:11342 flatbuffers
-14083:11358 safeparcel
-25442:11358 CCTZ
-36801:1602 JSR 305
-38404:11365 absl
-49770:680 STL
-50451:46 livedata-core
-50498:46 viewmodel
-50545:2500 zlib
-53046:1558 RE2
-54605:731 UTF
-55337:3182 PCRE
-58520:19442 ICU4C
-77963:1481 darts_clone
+1007:11358 CCTZ
+12366:11365 absl
+23732:11358 safeparcel
+35091:680 STL
+35772:1602 JSR 305
+37375:11342 flatbuffers
+48718:1732 Protobuf Nano
 79539:46 runtime
+50498:46 livedata-core
+50545:46 viewmodel
+50592:19442 ICU4C
+70035:3182 PCRE
+73218:1558 RE2
+74777:1481 darts_clone
+76259:731 UTF
+76991:2500 zlib
 80890:46 common
 79633:46 lint-gradle
 79680:46 builder

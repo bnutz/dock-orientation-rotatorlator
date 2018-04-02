@@ -57,4 +57,11 @@
         <item name="android:ellipsize">start</item>
     </style>
 
+    <!-- Base TextView Style for Toggle Label Headers -->
+    <style name="TextViewTestPanel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/cardview_margins</item>
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+    </style>
 </resources>
