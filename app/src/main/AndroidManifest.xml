@@ -20,7 +20,7 @@
         >
         <!-- Splash Screen Activity, the gatekeeper -->
         <activity
-            android:name="com.justbnutz.dockorientationrotatorlator.ActivitySplashScreen"
+            android:name=".ActivitySplashScreen"
             android:theme="@style/SplashTheme"
             >
             <intent-filter>
@@ -31,7 +31,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.justbnutz.dockorientationrotatorlator.ActivityRotatorlator"
+            android:name=".ActivityRotatorlator"
             android:launchMode="singleInstance"
             />
 
@@ -42,7 +42,7 @@
             />
 
         <!-- Device-Wide Broadcast Receiver (For Pre-Oreo devices) -->
-        <receiver android:name="com.justbnutz.dockorientationrotatorlator.ReceiverPortStatus">
+        <receiver android:name=".ReceiverPortStatus">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
@@ -50,8 +50,15 @@
             </intent-filter>
         </receiver>
 
+        <!-- Receiver to restart ServicePortStatusHandler after app is updated (Oreo still supports this filter) -->
+        <receiver android:name=".ReceiverRestartServiceAfterUpdate">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
         <!-- Services -->
-        <service android:name="com.justbnutz.dockorientationrotatorlator.ServicePortStatusHandler" />
+        <service android:name=".ServicePortStatusHandler" />
 
         <!-- Making absolutely sure Open Source licence views have Action Bars - https://medium.com/@jokatavr/how-to-use-android-open-source-notices-299a0635b5c2 -->
         <activity

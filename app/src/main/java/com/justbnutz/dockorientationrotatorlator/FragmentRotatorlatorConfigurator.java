@@ -211,7 +211,7 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
                         ).apply();
 
                 // If on Oreo or higher, need to place the Receiver in a Service for it to register
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     if (mToggleDockMonitor.isChecked()) {
                         ServicePortStatusHandler.startRotatorlatorService(getContext());
