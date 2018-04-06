@@ -44,17 +44,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- Base TextView Style for Toggle Label Headers -->
     <style name="TextViewToggleHeaderStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/cardview_margins</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/primary_text_size</item>
-        <item name="android:maxLines">2</item>
-        <item name="android:ellipsize">start</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- Base TextView Style for Toggle Label Headers -->

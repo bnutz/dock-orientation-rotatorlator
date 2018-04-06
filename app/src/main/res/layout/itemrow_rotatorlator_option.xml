@@ -10,36 +10,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <ImageView
-            android:id="@+id/img_power_state_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/cardview_margins"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
         <TextView
             android:id="@+id/lbl_power_state_label_header"
             android:labelFor="@id/btn_power_state_orientation_toggle"
             style="@style/TextViewToggleHeaderStyle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_power_state_icon"
+            app:layout_constraintEnd_toStartOf="@id/btn_power_state_orientation_toggle"
+            app:layout_constraintTop_toTopOf="parent"
             />
         <TextSwitcher
             android:id="@+id/txtswch_power_state_label_switcher"
             style="@style/TextSwitcherStyle"
-            app:layout_constraintStart_toEndOf="@id/lbl_power_state_label_header"
-            app:layout_constraintTop_toTopOf="@id/lbl_power_state_label_header"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_power_state_orientation_toggle"
-            app:layout_constraintBaseline_toBaselineOf="@id/lbl_power_state_label_header"
+            app:layout_constraintTop_toBottomOf="@id/lbl_power_state_label_header"
+            app:layout_constraintBottom_toBottomOf="parent"
             >
             <TextView
                 style="@style/StatusLabelTextViewStyle"
+                android:gravity="center"
                 android:textSize="@dimen/primary_text_size"
                 />
             <TextView
                 style="@style/StatusLabelTextViewStyle"
+                android:gravity="center"
                 android:textSize="@dimen/primary_text_size"
                 />
         </TextSwitcher>

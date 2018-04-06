@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -138,24 +137,30 @@ public class AdapterRotatorlatorConfigs extends RecyclerView.Adapter<AdapterRota
         if (viewHolder.prefKey
                 .equals(mContext.getString(R.string.prefkey_set_autorotate_unplugged))) {
 
-            viewHolder.imgPowerStateIcon.setImageResource(R.drawable.ic_dock_black);
             viewHolder.lblPowerStateLabelHeader.setText(mContext.getString(R.string.lbl_setting_unplugged));
+            viewHolder.lblPowerStateLabelHeader.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_dock_black, 0, 0, 0
+            );
 
             setPowerStateRotationModeLabels(viewHolder);
 
         } else if (viewHolder.prefKey
                 .equals(mContext.getString(R.string.prefkey_set_autorotate_plugged))) {
 
-            viewHolder.imgPowerStateIcon.setImageResource(R.drawable.ic_power_black);
             viewHolder.lblPowerStateLabelHeader.setText(mContext.getString(R.string.lbl_setting_plugged));
+            viewHolder.lblPowerStateLabelHeader.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_power_black, 0, 0, 0
+            );
 
             setPowerStateRotationModeLabels(viewHolder);
 
         } else if (viewHolder.prefKey
                 .equals(mContext.getString(R.string.prefkey_set_autorotate_wireless))) {
 
-            viewHolder.imgPowerStateIcon.setImageResource(R.drawable.ic_tap_and_play_black);
             viewHolder.lblPowerStateLabelHeader.setText(mContext.getString(R.string.lbl_setting_wireless));
+            viewHolder.lblPowerStateLabelHeader.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_tap_and_play_black, 0, 0, 0
+            );
 
             setPowerStateRotationModeLabels(viewHolder);
         }
@@ -272,7 +277,6 @@ public class AdapterRotatorlatorConfigs extends RecyclerView.Adapter<AdapterRota
 
     class ViewHolderRotatorlatorConfig extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final ImageView imgPowerStateIcon;
         final TextView lblPowerStateLabelHeader;
         final TextSwitcher txtswchPowerStateLabelSwitcher;
         final ImageButton btnPowerStateOrientationToggle;
@@ -284,7 +288,6 @@ public class AdapterRotatorlatorConfigs extends RecyclerView.Adapter<AdapterRota
         ViewHolderRotatorlatorConfig(View itemView) {
             super(itemView);
 
-            imgPowerStateIcon = itemView.findViewById(R.id.img_power_state_icon);
             lblPowerStateLabelHeader = itemView.findViewById(R.id.lbl_power_state_label_header);
             txtswchPowerStateLabelSwitcher = itemView.findViewById(R.id.txtswch_power_state_label_switcher);
             btnPowerStateOrientationToggle = itemView.findViewById(R.id.btn_power_state_orientation_toggle);
