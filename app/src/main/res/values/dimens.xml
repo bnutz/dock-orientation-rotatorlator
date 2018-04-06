@@ -10,4 +10,6 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_spacer">64dp</dimen>
+
+    <integer name="avd_anim_duration">400</integer>
 </resources>

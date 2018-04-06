@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
@@ -96,6 +98,14 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
             mReceiverPortStatus = new ReceiverPortStatus();
             mRotationSettingsObserver = new ObserverRotationSetting(new Handler());
             mAdapterRotatorlatorConfigs = new AdapterRotatorlatorConfigs(getContext(), mSharedPrefs);
+
+            // If the device was previously rebooted then the Service will be stopped, check if we need to start it back up again
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                    && mSharedPrefs.getBoolean(getContext().getString(R.string.prefkey_enable_dock_monitor), false)) {
+
+                // If the Service is already running then this will just do onStartCommand() again on the existing Service
+                ServicePortStatusHandler.startRotatorlatorService(getContext());
+            }
         }
     }
 
@@ -355,9 +365,9 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
         // Update the Monitor toggle
         mToggleDockMonitor.setChecked(monitoringPowerStatus);
 
-        // Text label placeholders
-        String currentPowerText = "";
-        String currentOrientationText = "";
+        // Init the text label placeholders
+        String currentPowerText = getString(R.string.lbl_status_blank);
+        String currentOrientationText = getString(R.string.lbl_status_blank);
 
         Drawable currentPowerIcon = null;
         Drawable currentOrientationIcon = null;
@@ -396,19 +406,64 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
                 currentOrientationIcon = getResources().getDrawable(R.drawable.ic_screen_rotation_grey_400);
 
             } else {
-                currentOrientationText = getString(R.string.lbl_status_portrait);
-                currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_portrait_grey_400);
-            }
+                // If Auto-Rotate is disabled, then will need to work out the current User Rotation setting relative to the natural orientation
+                if (mReceiverPortStatus != null) {
+                    int naturalOrientation = mReceiverPortStatus.getNaturalOrientation(getContext());
 
-        } else {
-            // If the monitor is off, then reset the labels
-            currentPowerText = getString(R.string.lbl_status_blank);
-            currentOrientationText = getString(R.string.lbl_status_blank);
+                    // Only set the label if we have a baseline orientation to check against
+                    if (naturalOrientation != Configuration.ORIENTATION_UNDEFINED) {
+
+                        switch (getUserRotation()) {
+                            case Surface.ROTATION_0:
+                                if (naturalOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    currentOrientationText = getString(R.string.lbl_status_portrait);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_portrait_grey_400);
+                                } else {
+                                    currentOrientationText = getString(R.string.lbl_status_landscape);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_landscape_grey_400);
+                                }
+                                break;
+
+                            case Surface.ROTATION_90:
+                                if (naturalOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    currentOrientationText = getString(R.string.lbl_status_landscape);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_landscape_grey_400);
+                                } else {
+                                    currentOrientationText = getString(R.string.lbl_status_portrait);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_portrait_grey_400);
+                                }
+                                break;
+
+                            case Surface.ROTATION_180:
+                                if (naturalOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    currentOrientationText = getString(R.string.lbl_status_portrait_inverted);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_portrait_grey_400);
+                                } else {
+                                    currentOrientationText = getString(R.string.lbl_status_landscape_inverted);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_landscape_grey_400);
+                                }
+                                break;
+
+                            case Surface.ROTATION_270:
+                                if (naturalOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    currentOrientationText = getString(R.string.lbl_status_landscape_inverted);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_landscape_grey_400);
+                                } else {
+                                    currentOrientationText = getString(R.string.lbl_status_portrait_inverted);
+                                    currentOrientationIcon = getResources().getDrawable(R.drawable.ic_stay_primary_portrait_grey_400);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         // Only update the labels if they're actually different from the current text
-        if (!TextUtils.isEmpty(currentPowerText)
-                && !((TextView) mTxtSwchCurrentPowerStatus.getCurrentView()).getText().equals(currentPowerText)) {
+        if (!((TextView) mTxtSwchCurrentPowerStatus.getCurrentView()).getText().equals(currentPowerText)) {
 
             // Prep the Power State icon for when the label updates
             ((TextView) mTxtSwchCurrentPowerStatus.getNextView())
@@ -418,8 +473,7 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
             mTxtSwchCurrentPowerStatus.setText(currentPowerText);
         }
 
-        if (!TextUtils.isEmpty(currentOrientationText)
-                && !((TextView) mTxtSwchCurrentOrientationStatus.getCurrentView()).getText().equals(currentOrientationText)) {
+        if (!((TextView) mTxtSwchCurrentOrientationStatus.getCurrentView()).getText().equals(currentOrientationText)) {
 
             // Prep the Orientation State icon for when the label updates
             ((TextView) mTxtSwchCurrentOrientationStatus.getNextView())
@@ -450,6 +504,28 @@ public class FragmentRotatorlatorConfigurator extends Fragment implements View.O
         }
 
         return (rotationSetting == 1);
+    }
+
+
+    /**
+     * Return the current User Rotation setting of the device
+     */
+    private int getUserRotation() {
+
+        int userRotation = -1;
+
+        if (getContext() != null) {
+
+            // Read the user rotation setting value from Settings
+            userRotation = Settings.System.getInt(
+                    getContext().getContentResolver(),
+                    Settings.System.USER_ROTATION,
+                    -1
+            );
+            // Corresponds to Surface.Rotation contants
+        }
+
+        return userRotation;
     }
 
     // endregion

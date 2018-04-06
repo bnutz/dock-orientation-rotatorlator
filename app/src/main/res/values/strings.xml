@@ -14,6 +14,9 @@
     <string name="lbl_current_orientation_status">Current Rotation Setting: </string>
     <string name="lbl_status_no_change">Do nothing</string>
     <string name="lbl_status_portrait">Portrait</string>
+    <string name="lbl_status_portrait_inverted">Portrait (Inverted)</string>
+    <string name="lbl_status_landscape">Landscape</string>
+    <string name="lbl_status_landscape_inverted">Landscape (Inverted)</string>
     <string name="lbl_status_auto_rotate">Auto-rotate</string>
 
     <string name="lbl_setting_unplugged">When Unplugged:</string>
@@ -27,5 +30,5 @@
     <string name="mnu_play_store">Play Store</string>
     <string name="mnu_contact">Tweet @Brian_Nutz</string>
     <string name="mnu_show_wireless_options">Show Wireless Option</string>
-    <string name="mnu_show_test_panel">Show Test Panel</string>
+    <string name="mnu_show_test_panel">Show Diagnostics Panel</string>
 </resources>

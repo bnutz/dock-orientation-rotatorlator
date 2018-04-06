@@ -7,8 +7,8 @@ android {
         applicationId "com.justbnutz.dockorientationrotatorlator"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 3
-        versionName "v20180402.1"
+        versionCode 4
+        versionName "v20180406"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

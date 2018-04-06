@@ -180,11 +180,35 @@ public class AdapterRotatorlatorConfigs extends RecyclerView.Adapter<AdapterRota
                 );
                 break;
 
+            case PORTRAIT_INVERTED:
+                updateRotationModeLabels(
+                        viewHolder,
+                        mContext.getString(R.string.lbl_status_portrait_inverted),
+                        R.drawable.avd_portrait_to_portrait_inverted
+                );
+                break;
+
+            case LANDSCAPE:
+                updateRotationModeLabels(
+                        viewHolder,
+                        mContext.getString(R.string.lbl_status_landscape),
+                        R.drawable.avd_portrait_to_landscape
+                );
+                break;
+
+            case LANDSCAPE_INVERTED:
+                updateRotationModeLabels(
+                        viewHolder,
+                        mContext.getString(R.string.lbl_status_landscape_inverted),
+                        R.drawable.avd_landscape_to_landscape_inverted
+                );
+                break;
+
             case AUTO_ROTATE:
                 updateRotationModeLabels(
                         viewHolder,
                         mContext.getString(R.string.lbl_status_auto_rotate),
-                        R.drawable.avd_portrait_to_rotate
+                        R.drawable.avd_landscape_to_rotate
                 );
                 break;
 

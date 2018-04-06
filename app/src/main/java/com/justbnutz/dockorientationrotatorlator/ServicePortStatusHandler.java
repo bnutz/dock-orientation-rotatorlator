@@ -280,7 +280,7 @@ public class ServicePortStatusHandler extends Service {
         // Create the initial notification
         mNotificationBuilder = new NotificationCompat.Builder(this, notificationChannelId)
                 .setContentTitle(getString(R.string.notification_channel_name))
-                .setSmallIcon(R.drawable.ic_dock_black)
+                .setSmallIcon(R.drawable.ic_adjust_black)
                 .setContentText(getString(R.string.lbl_status_blank))
                 .setOngoing(true)
 
@@ -365,7 +365,13 @@ public class ServicePortStatusHandler extends Service {
             // Set the new icon
             switch (rotationMode) {
                 case PORTRAIT:
-                    mNotificationBuilder.setSmallIcon(R.drawable.ic_dock_black);
+                case PORTRAIT_INVERTED:
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_stay_primary_portrait_black);
+                    break;
+
+                case LANDSCAPE:
+                case LANDSCAPE_INVERTED:
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_stay_primary_landscape_black);
                     break;
 
                 case AUTO_ROTATE:

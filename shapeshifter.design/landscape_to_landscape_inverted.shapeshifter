@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "layers": {
+    "vectorLayer": {
+      "id": "111",
+      "name": "landscape_to_landscape_inverted",
+      "type": "vector",
+      "children": [
+        {
+          "id": "116",
+          "name": "screen_central",
+          "type": "group",
+          "rotation": 90,
+          "pivotX": 12,
+          "pivotY": 12,
+          "children": [
+            {
+              "id": "117",
+              "name": "portrait",
+              "type": "path",
+              "pathData": "M 17 1.01 L 7 1 C 5.9 1 5.01 1.9 5.01 3 L 5.01 21 C 5.01 22.1 5.9 23 7 23 L 17 23 C 18.1 23 19 22.1 19 21 L 19 3 C 19 1.9 18.1 1.01 17 1.01 Z M 17 19 L 7 19 L 7 5 L 17 5 L 17 19 Z",
+              "fillColor": "#000",
+              "strokeWidth": 1
+            }
+          ]
+        }
+      ]
+    },
+    "hiddenLayerIds": [
+      null
+    ]
+  },
+  "timeline": {
+    "animation": {
+      "id": "118",
+      "name": "anim",
+      "duration": 300,
+      "blocks": [
+        {
+          "id": "18367",
+          "layerId": "116",
+          "propertyName": "rotation",
+          "startTime": 0,
+          "endTime": 300,
+          "interpolator": "FAST_OUT_SLOW_IN",
+          "type": "number",
+          "fromValue": -90,
+          "toValue": 90
+        }
+      ]
+    }
+  }
+}

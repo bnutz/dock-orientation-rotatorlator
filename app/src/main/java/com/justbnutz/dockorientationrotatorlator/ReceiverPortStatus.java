@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -23,6 +24,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.Surface;
+import android.view.WindowManager;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -48,6 +54,9 @@ public class ReceiverPortStatus extends BroadcastReceiver {
     enum RotationMode {
         NO_CHANGE,
         PORTRAIT,
+        PORTRAIT_INVERTED,
+        LANDSCAPE,
+        LANDSCAPE_INVERTED,
         AUTO_ROTATE
     }
 
@@ -90,7 +99,7 @@ public class ReceiverPortStatus extends BroadcastReceiver {
                 // Set the derived Rotation Mode
                 setDisplayRotationMode(
                         context,
-                        rotationMode == RotationMode.AUTO_ROTATE
+                        rotationMode
                 );
             }
 
@@ -152,7 +161,7 @@ public class ReceiverPortStatus extends BroadcastReceiver {
      * Verifies we have permission to alter the system settings and if so, set the device rotation
      * setting accordingly.
      */
-    private void setDisplayRotationMode(@NonNull Context context, boolean setAutoRotate) {
+    private void setDisplayRotationMode(@NonNull final Context context, final RotationMode rotationMode) {
 
         boolean rotatorlatorIsGo;
 
@@ -165,12 +174,156 @@ public class ReceiverPortStatus extends BroadcastReceiver {
         }
 
         if (rotatorlatorIsGo) {
+
+            boolean isAutoRotate;
+
             // Permissions confirmed, set the device rotation accordingly
+            switch (rotationMode) {
+
+                case PORTRAIT:
+                case PORTRAIT_INVERTED:
+                case LANDSCAPE:
+                case LANDSCAPE_INVERTED:
+                    // Fixed Rotation set - so disable Auto-Rotate
+                    isAutoRotate = false;
+                    break;
+
+                case AUTO_ROTATE:
+                default:
+                    // Only need to enable Auto-Rotate; User Rotation not needed
+                    isAutoRotate = true;
+                break;
+            }
+
+            // Apply the Auto-Rotate setting
             Settings.System.putInt(
                     context.getContentResolver(),
                     Settings.System.ACCELEROMETER_ROTATION,
-                    (setAutoRotate ? 1 : 0)
+                    isAutoRotate
+                            ? 1
+                            : 0
             );
+
+            // If we're disabling Auto-Rotate, then also need to set the User Rotation value
+            if (!isAutoRotate) {
+
+                // Wait a little bit as it looks like some systems don't handle successive multiple changes in rotation too well
+                Timer quickTimer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        setUserRotatation(context, rotationMode);
+                    }
+                };
+
+                // Reference: https://www.codementor.io/tips/0743378261/non-freezing-sleep-in-android-app
+                quickTimer.schedule(timerTask, 150);
+            }
+        }
+    }
+
+
+    /**
+     * If a fixed-orientation is chosen, then need to disable Auto-Rotate and then set the User Rotation
+     * value accordingly - this will be relative to the "natural orientation" of the device, which needs
+     * to be figured out separately.
+     *
+     * Reference: https://stackoverflow.com/a/9888357
+     */
+    private void setUserRotatation(@NonNull Context context, RotationMode userRotationMode) {
+
+        // Fetch the "natural orientation" of the device (portrait vs landscape)
+        int naturalOrientation = getNaturalOrientation(context);
+
+        // Make sure we have an baseline orientation to reference against
+        if (naturalOrientation != Configuration.ORIENTATION_UNDEFINED) {
+
+            // Init the value that will be inserted
+            int userRotation = -1;
+
+            // Set the User Rotation value relative to the natural orientation of the device
+            switch (userRotationMode) {
+                case PORTRAIT:
+                    userRotation = (naturalOrientation == Configuration.ORIENTATION_PORTRAIT)
+                            ? Surface.ROTATION_0
+                            : Surface.ROTATION_90;
+                    break;
+
+                case PORTRAIT_INVERTED:
+                    userRotation = (naturalOrientation == Configuration.ORIENTATION_PORTRAIT)
+                            ? Surface.ROTATION_180
+                            : Surface.ROTATION_270;
+                    break;
+
+                case LANDSCAPE:
+                    userRotation = (naturalOrientation == Configuration.ORIENTATION_LANDSCAPE)
+                            ? Surface.ROTATION_0
+                            : Surface.ROTATION_90;
+                    break;
+
+                case LANDSCAPE_INVERTED:
+                    userRotation = (naturalOrientation == Configuration.ORIENTATION_LANDSCAPE)
+                            ? Surface.ROTATION_180
+                            : Surface.ROTATION_270;
+                    break;
+
+                default:
+                    break;
+            }
+
+            // Make sure we have a proper value to set and apply it
+            if (userRotation >= 0) {
+                Settings.System.putInt(
+                        context.getContentResolver(),
+                        Settings.System.USER_ROTATION,
+                        userRotation
+                );
+            }
+        }
+    }
+
+
+    /**
+     * The User Rotation value is relative to the "natural orientation" of the device. So "Surface.ROTATION_90"
+     * will be different to a tablet that is naturally landscape vs a phone that is naturally portrait.
+     *
+     * Because of this, we need to determine the natural orientation of the current device to properly label
+     * our settings.
+     *
+     * Reference: https://stackoverflow.com/a/9888357
+     */
+    int getNaturalOrientation(@NonNull Context context) {
+
+        // Retrieve the system objects for determining device layout measurements
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Configuration configuration = context.getResources().getConfiguration();
+
+        if (windowManager != null && configuration != null) {
+
+            // Get the current rotation and orientation values
+            int currentRotation = windowManager.getDefaultDisplay().getRotation();
+            int currentOrientation = configuration.orientation;
+
+            // Natural orientation can be determined by comparing the two values against each other
+            if (
+                    (((currentRotation == Surface.ROTATION_0) || (currentRotation == Surface.ROTATION_180))
+                    && currentOrientation == Configuration.ORIENTATION_PORTRAIT)
+                    ||
+                    (((currentRotation == Surface.ROTATION_90) || (currentRotation == Surface.ROTATION_270))
+                    && currentOrientation == Configuration.ORIENTATION_LANDSCAPE)
+                    ) {
+
+                return Configuration.ORIENTATION_PORTRAIT;
+
+            } else {
+                return Configuration.ORIENTATION_LANDSCAPE;
+
+            }
+
+        } else {
+            // If the reference objects could not be retrieved, return an undefined result
+            return Configuration.ORIENTATION_UNDEFINED;
         }
     }
 
