@@ -21,6 +21,7 @@
         <!-- Splash Screen Activity, the gatekeeper -->
         <activity
             android:name=".ActivitySplashScreen"
+            android:exported="true"
             android:theme="@style/SplashTheme"
             >
             <intent-filter>
@@ -42,7 +43,9 @@
             />
 
         <!-- Device-Wide Broadcast Receiver (For Pre-Oreo devices) -->
-        <receiver android:name=".ReceiverPortStatus">
+        <receiver
+            android:name=".ReceiverPortStatus"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
@@ -51,7 +54,9 @@
         </receiver>
 
         <!-- Receiver to restart ServicePortStatusHandler after app is updated (Oreo still supports this filter) -->
-        <receiver android:name=".ReceiverRestartServiceAfterUpdate">
+        <receiver
+            android:name=".ReceiverRestartServiceAfterUpdate"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
