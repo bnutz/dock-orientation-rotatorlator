@@ -2,27 +2,36 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.justbnutz.dockorientationrotatorlator"
     >
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions"
         />
 
+    <!-- Required since targetSdk 28 for startForeground(); SPECIAL_USE variant since API 34 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- API 33+: the service's status notification is invisible without this runtime grant -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
+        android:theme="@style/Theme.Rotatorlator"
         >
-        <!-- Splash Screen Activity, the gatekeeper -->
+        <!-- Single Compose Activity: system splash (androidx.core.splashscreen) + the
+             WRITE_SETTINGS gate + the config screen. singleTask so the notification's
+             content Intent brings the existing instance forward. -->
         <activity
-            android:name=".ActivitySplashScreen"
+            android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Rotatorlator.Splash"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,30 +39,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Main Activity -->
-        <activity
-            android:name=".ActivityRotatorlator"
-            android:launchMode="singleInstance"
-            />
-
-        <!-- Test Panel Activity -->
-        <activity
-            android:name=".ActivityTestPanel"
-            android:launchMode="singleInstance"
-            />
-
-        <!-- Device-Wide Broadcast Receiver (For Pre-Oreo devices) -->
-        <receiver
-            android:name=".ReceiverPortStatus"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
-                <action android:name="android.intent.action.ACTION_DOCK_EVENT"/>
-            </intent-filter>
-        </receiver>
-
-        <!-- Receiver to restart ServicePortStatusHandler after app is updated (Oreo still supports this filter) -->
+        <!-- Receiver to restart ServicePortStatusHandler after app is updated
+             (power/dock broadcasts themselves are received via a dynamically registered
+             receiver inside PowerStateRepository's Flow, not a manifest entry) -->
         <receiver
             android:name=".ReceiverRestartServiceAfterUpdate"
             android:exported="true">
@@ -62,18 +50,18 @@
             </intent-filter>
         </receiver>
 
-        <!-- Services -->
-        <service android:name=".ServicePortStatusHandler" />
+        <!-- Services. specialUse: no standard FGS type covers "watch charger/dock state";
+             the subtype property below is what a Play policy review reads. -->
+        <service
+            android:name=".ServicePortStatusHandler"
+            android:foregroundServiceType="specialUse"
+            >
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Monitors charger/dock connect and disconnect events so the app can apply the user's chosen screen-rotation lock setting"
+                />
+        </service>
 
-        <!-- Making absolutely sure Open Source licence views have Action Bars - https://medium.com/@jokatavr/how-to-use-android-open-source-notices-299a0635b5c2 -->
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            />
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            />
     </application>
 
 </manifest>

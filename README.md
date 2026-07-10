@@ -16,8 +16,17 @@ With support for locking to inverted and landscape orientations.
 Note that not all apps support landscape-mode and will revert to portrait when switching over to them (you can check this by enabling Auto-Rotate and then holding your device sideways when on the target app - if the app doesn't go sideways to match your device; then landscape-lock won't work on that app either).
 
 
-
 (Actually this is just a really over-engineered excuse for me to play with Animated Vector Drawables...)
+
+### 2026 Rewrite ###
+
+Originally a 2018 Java / XML-View app, fully overhauled in 2026:
+
+* 100% Kotlin, single-Activity **Jetpack Compose** UI (Material 3 + **Material You** dynamic colour, dark theme)
+* DataStore + Kotlin Flows architecture (ViewModel / repositories / foreground service)
+* Fully vector assets, including an adaptive launcher icon with an Android 13+ themed (monochrome) layer
+* The original Animated Vector Drawables survived the rewrite — still the whole point
+* Requires Android 12+
 
 ### Play Store ###
 
@@ -25,4 +34,4 @@ Note that not all apps support landscape-mode and will revert to portrait when s
 
 ### Contact ###
 
-* Brian Lau ([@Brian_Nutz](https://twitter.com/brian_nutz/))
+* Brian Lau — via this repo's issues

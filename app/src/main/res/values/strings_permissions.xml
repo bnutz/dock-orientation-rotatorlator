@@ -10,7 +10,5 @@
         \nAndroid Settings > Apps &amp; Notifications > Special App Access > Modify System Settings
     </string>
 
-    <string name="btn_try_again">Try Again</string>
-    <string name="btn_settings">Settings</string>
     <string name="btn_permissions_menu">Permission Settings</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- The legacy brand teal — now only the splash-screen background
+         (in-app colours are Material You dynamic) -->
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00675b</color>
-    <color name="colorAccent">#ffab40</color>
 </resources>

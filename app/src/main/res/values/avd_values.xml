@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Referenced from inside the avd_*.xml AnimatedVectorDrawables (the View-era
+     dimens.xml these lived in is gone; only these two values were still used). -->
+<resources>
+    <dimen name="imgbtn_drawable_size">36dp</dimen>
+
+    <integer name="avd_anim_duration">400</integer>
+</resources>

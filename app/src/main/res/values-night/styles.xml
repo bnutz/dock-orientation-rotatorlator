@@ -1,0 +1,5 @@
+<resources>
+
+    <!-- Dark window frame behind the Compose content -->
+    <style name="Theme.Rotatorlator" parent="android:Theme.Material.NoActionBar" />
+</resources>

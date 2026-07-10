@@ -1,69 +1,14 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <!-- Compose draws everything — this is just the window frame behind it.
+         (values-night switches to the dark parent.) -->
+    <style name="Theme.Rotatorlator" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <!-- Splash Screen Theme -->
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
-
-    <!-- Base Style for CardView-ish Lists -->
-    <style name="CardListStyle" parent="CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/cardview_margins</item>
-        <item name="cardBackgroundColor">@color/cardview_light_background</item>
-        <item name="cardCornerRadius">@dimen/cardview_corner_radius</item>
-    </style>
-
-    <!-- Base TextView Style for Status Label Headers -->
-    <style name="TextViewStatusHeaderStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/cardview_margins</item>
-        <item name="android:textSize">@dimen/secondary_text_size</item>
-    </style>
-
-    <!-- Base TextSwitcher Style -->
-    <style name="TextSwitcherStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/cardview_margins</item>
-        <item name="android:inAnimation">@anim/textswitcher_in</item>
-        <item name="android:outAnimation">@anim/textswitcher_out</item>
-    </style>
-
-    <!-- Base Style for TextViews inside the TextSwitchers -->
-    <style name="StatusLabelTextViewStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <!-- Base TextView Style for Toggle Label Headers -->
-    <style name="TextViewToggleHeaderStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/cardview_margins</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/primary_text_size</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <!-- Base TextView Style for Toggle Label Headers -->
-    <style name="TextViewTestPanel">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/cardview_margins</item>
-        <item name="android:textSize">@dimen/secondary_text_size</item>
+    <!-- Launcher theme: Android 12+ system splash (icon comes from the adaptive
+         launcher icon), handing off to Theme.Rotatorlator once Compose is up.
+         The legacy teal keeps a cameo as the splash background. -->
+    <style name="Theme.Rotatorlator.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="postSplashScreenTheme">@style/Theme.Rotatorlator</item>
     </style>
 </resources>

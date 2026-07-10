@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Debug-build override: makes the sideloaded build identifiable on the home screen
+         (debug installs side-by-side with the Play build via the .debug appId suffix). -->
+    <string name="app_name">Dock Orientation Rotatorlator (Dev)</string>
+</resources>
