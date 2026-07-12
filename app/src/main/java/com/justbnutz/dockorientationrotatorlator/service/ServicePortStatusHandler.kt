@@ -1,4 +1,8 @@
 /*
+ * .service — the headless half of the app: the foreground Service that does the actual
+ * work (and the receiver that restarts it after an app update). It consumes the same
+ * .data repositories the UI does, and runs whether or not any UI exists.
+ *
  * Created by Brian Lau on 2018-03-23
  * Copyright (c) 2018. All rights reserved.
  *
@@ -8,7 +12,14 @@
  * both land in the combined Flow below.
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.service
+
+import com.justbnutz.dockorientationrotatorlator.R
+import com.justbnutz.dockorientationrotatorlator.data.PowerStateRepository
+import com.justbnutz.dockorientationrotatorlator.data.PrefsRepository
+import com.justbnutz.dockorientationrotatorlator.model.PowerStatus
+import com.justbnutz.dockorientationrotatorlator.model.RotationMode
+import com.justbnutz.dockorientationrotatorlator.ui.MainActivity
 
 import android.app.Notification
 import android.app.NotificationChannel

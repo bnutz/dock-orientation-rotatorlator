@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fully vector adaptive icon (Phase 4): foreground doubles as the Android 13+
-     monochrome/themed-icon layer (single-colour art, system applies the tint). -->
+<!-- Fully vector adaptive icon. Three layers:
+       background — very light gradient plate (drawable/ic_launcher_background)
+       foreground — the artwork at 95%, subtle teal gradient
+       monochrome — the same artwork, flat, for Android 13+ themed icons -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@color/ic_launcher_background"/>
+    <background android:drawable="@drawable/ic_launcher_background"/>
     <foreground android:drawable="@drawable/ic_launcher_foreground"/>
-    <monochrome android:drawable="@drawable/ic_launcher_foreground"/>
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>
 </adaptive-icon>

@@ -4,7 +4,10 @@
  * LocalBroadcastManager event bus is gone — consumers collect these Flows directly.
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.data
+
+import com.justbnutz.dockorientationrotatorlator.model.PowerStatus
+import com.justbnutz.dockorientationrotatorlator.model.RotationMode
 
 import android.content.BroadcastReceiver
 import android.content.Context

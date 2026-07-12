@@ -20,8 +20,8 @@ android {
         targetSdk = 35
         // versionCode: plain +1 per release. versionName: build timestamp to the
         // minute, vYYYYMMDD.HHMM — the only version label that matters here.
-        versionCode = 6
-        versionName = "v20260710.0914"
+        versionCode = 7
+        versionName = "v20260712.2201"
     }
 
     signingConfigs {

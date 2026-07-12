@@ -1,8 +1,13 @@
 /*
- * Extracted from ReceiverPortStatus (2018) during overhaul Phase 2, 2026-07.
+ * .model — the domain vocabulary. Pure Kotlin: no Android imports, no resources, no
+ * dependencies on any other layer. Everything else (data, service, ui) depends on this;
+ * it depends on nothing. Labels and icons for these values live in the ui layer, so the
+ * domain never has to know how it's displayed.
+ *
+ * (Extracted from ReceiverPortStatus during overhaul Phase 2, 2026-07.)
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.model
 
 /**
  * The rotation-lock setting the user can assign to each power state.

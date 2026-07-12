@@ -5,7 +5,9 @@
  * Overhaul Phase 2, 2026-07: reads the monitor pref from DataStore.
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.service
+
+import com.justbnutz.dockorientationrotatorlator.data.PrefsRepository
 
 import android.content.BroadcastReceiver
 import android.content.Context

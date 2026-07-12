@@ -3,7 +3,14 @@
  * Phase 3: consumed by MainActivity's Compose tree (RotatorlatorScreens.kt).
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.ui
+
+import com.justbnutz.dockorientationrotatorlator.data.PowerStateRepository
+import com.justbnutz.dockorientationrotatorlator.data.PrefsRepository
+import com.justbnutz.dockorientationrotatorlator.data.RotatorlatorPrefs
+import com.justbnutz.dockorientationrotatorlator.model.PowerStatus
+import com.justbnutz.dockorientationrotatorlator.model.RotationMode
+import com.justbnutz.dockorientationrotatorlator.service.ServicePortStatusHandler
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

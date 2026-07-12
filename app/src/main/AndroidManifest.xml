@@ -28,7 +28,7 @@
              WRITE_SETTINGS gate + the config screen. singleTask so the notification's
              content Intent brings the existing instance forward. -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Rotatorlator.Splash"
@@ -43,7 +43,7 @@
              (power/dock broadcasts themselves are received via a dynamically registered
              receiver inside PowerStateRepository's Flow, not a manifest entry) -->
         <receiver
-            android:name=".ReceiverRestartServiceAfterUpdate"
+            android:name=".service.ReceiverRestartServiceAfterUpdate"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
@@ -53,7 +53,7 @@
         <!-- Services. specialUse: no standard FGS type covers "watch charger/dock state";
              the subtype property below is what a Play policy review reads. -->
         <service
-            android:name=".ServicePortStatusHandler"
+            android:name=".service.ServicePortStatusHandler"
             android:foregroundServiceType="specialUse"
             >
             <property

@@ -1,0 +1,29 @@
+<!--
+    Adaptive-icon background (2026 refresh).
+
+    Was a flat white colour resource. Now a very light off-white gradient with the
+    faintest teal cast at the bottom-right, so the plate has a little depth under the
+    launcher's mask without reading as "coloured". Deliberately subtle: at icon size it
+    should register as texture, not as a colour.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="0"
+                android:startY="0"
+                android:endX="108"
+                android:endY="108">
+                <item android:offset="0" android:color="#FFFFFF" />
+                <item android:offset="1" android:color="#EAF1F0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

@@ -1,8 +1,15 @@
 /*
- * Overhaul Phase 2, 2026-07: DataStore replaces the framework SharedPreferences.
+ * .data — the repositories: the only classes that touch persistence (DataStore) or the
+ * Android system state (settings, broadcasts). They expose Flows + suspend functions and
+ * know nothing about the UI or the Service that consume them.
+ *
+ * This file: DataStore, replacing the framework SharedPreferences (overhaul Phase 2).
  */
 
-package com.justbnutz.dockorientationrotatorlator
+package com.justbnutz.dockorientationrotatorlator.data
+
+import com.justbnutz.dockorientationrotatorlator.model.PowerStatus
+import com.justbnutz.dockorientationrotatorlator.model.RotationMode
 
 import android.content.Context
 import androidx.datastore.preferences.SharedPreferencesMigration
