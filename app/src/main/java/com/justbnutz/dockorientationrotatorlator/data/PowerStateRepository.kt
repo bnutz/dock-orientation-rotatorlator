@@ -27,6 +27,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 /**
  * Watches and controls the device's power/dock state and rotation-lock settings.
@@ -36,22 +37,67 @@ import kotlinx.coroutines.flow.callbackFlow
  */
 class PowerStateRepository(private val context: Context) {
 
+    private companion object {
+        /** EXTRA_PLUGGED is 0 when running on battery; there is no named constant for it. */
+        const val PLUG_TYPE_NONE = 0
+
+        /** No sticky ACTION_DOCK_EVENT has ever been sent (a phone that has never been docked). */
+        const val DOCK_STATE_UNKNOWN = -1
+    }
+
     // region ================== EVENT FLOWS ==================
     // ====== ================== =========== ==================
 
     /**
      * Stream of PowerStatus values: emits the current status immediately, then again on
-     * every power/dock broadcast while collected. Each collection registers its own
+     * every power/dock change while collected. Each collection registers its own
      * receiver, so the Service keeps its stream when the UI goes away.
+     *
+     * ACTION_BATTERY_CHANGED is the authoritative source of the plug state, and it is
+     * listened to for a reason. ACTION_POWER_CONNECTED / _DISCONNECTED carry NO plug-type
+     * extra, so the only way to answer "USB or wireless?" from them is to re-read the
+     * sticky ACTION_BATTERY_CHANGED — and at the moment those edge broadcasts are
+     * delivered, that sticky can still hold the PREVIOUS EXTRA_PLUGGED value (notably on
+     * a wireless pad, where the plug type settles only once charging negotiates). Reading
+     * it there yields the old status, and since nothing re-reads afterwards the app stays
+     * stale until something re-collects this Flow — which is exactly what rotating the
+     * screen used to do, and why the state only appeared to update "after an orientation
+     * change".
+     *
+     * So: hold the two inputs (plug type, dock state) as state, and update each from the
+     * extras of the broadcast that actually carries it.
      */
     fun powerStatusFlow(): Flow<PowerStatus> = callbackFlow {
+
+        // Seed from the sticky broadcasts, then keep updated from the broadcasts themselves
+        var plugType = stickyPlugType()
+        var dockState = stickyDockState()
+
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(c: Context?, intent: Intent?) {
-                trySend(currentPowerStatus())
+                when (intent?.action) {
+                    // Carries EXTRA_PLUGGED: the value we actually care about
+                    Intent.ACTION_BATTERY_CHANGED ->
+                        plugType = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, plugType)
+
+                    Intent.ACTION_DOCK_EVENT ->
+                        dockState = intent.getIntExtra(Intent.EXTRA_DOCK_STATE, dockState)
+
+                    // No plug-type extra on these two. They're kept because they fire
+                    // promptly on the physical plug/unplug edge; the sticky re-read is a
+                    // best-effort refresh, and any staleness is corrected moments later by
+                    // the ACTION_BATTERY_CHANGED that always follows.
+                    Intent.ACTION_POWER_CONNECTED,
+                    Intent.ACTION_POWER_DISCONNECTED ->
+                        plugType = stickyPlugType()
+                }
+
+                trySend(statusOf(plugType, dockState))
             }
         }
 
         val intentFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_BATTERY_CHANGED)
             addAction(Intent.ACTION_DOCK_EVENT)
             addAction(Intent.ACTION_POWER_CONNECTED)
             addAction(Intent.ACTION_POWER_DISCONNECTED)
@@ -62,10 +108,14 @@ class PowerStateRepository(private val context: Context) {
         ContextCompat.registerReceiver(context, receiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
 
         // Seed with the current state
-        trySend(currentPowerStatus())
+        trySend(statusOf(plugType, dockState))
 
         awaitClose { context.unregisterReceiver(receiver) }
     }
+        // ACTION_BATTERY_CHANGED also fires on every battery level/temperature tick, which
+        // says nothing about the plug. Collapse those: without this, the Service would
+        // re-apply the rotation setting (a Settings.System write) every few seconds.
+        .distinctUntilChanged()
 
     /**
      * Emits on every change to the system rotation settings (and once on collect), so
@@ -230,69 +280,49 @@ class PowerStateRepository(private val context: Context) {
     // ====== ================== =============== ==================
 
     /**
-     * Check the current _DOCK / _BATTERY state Intents and return what type of Port / Power status
-     * we're currently at.
+     * Derive the Power status from the two inputs the system gives us, rather than from a
+     * fresh sticky read — see powerStatusFlow() for why the timing of that read matters.
      *
      * References:
      * - https://developer.android.com/training/monitoring-device-state/docking-monitoring.html
      * - https://developer.android.com/training/monitoring-device-state/battery-monitoring.html
      */
-    fun currentPowerStatus(): PowerStatus {
+    private fun statusOf(plugType: Int, dockState: Int): PowerStatus {
+        val isWireless = plugType == BatteryManager.BATTERY_PLUGGED_WIRELESS
+        val isPlugged = plugType == BatteryManager.BATTERY_PLUGGED_AC
+                || plugType == BatteryManager.BATTERY_PLUGGED_USB
+        val isDocked = dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED && dockState != DOCK_STATE_UNKNOWN
+
         return when {
-            isWirelesslyCharging() -> PowerStatus.WIRELESSLY_CHARGING
-            isPluggedIn() || isDocked() -> PowerStatus.PLUGGED_IN
+            isWireless -> PowerStatus.WIRELESSLY_CHARGING
+            isPlugged || isDocked -> PowerStatus.PLUGGED_IN
             else -> PowerStatus.DISCONNECTED
         }
     }
 
     /**
-     * Retrieve the current Dock state via sticky broadcasts and return whether we are currently docked
-     * or not.
+     * The current power status, read from the sticky broadcasts. Only used to SEED the Flow:
+     * once collecting, the state is tracked from the broadcast extras instead.
      */
-    private fun isDocked(): Boolean {
-        val dockState = getStateIntent(checkingBatteryState = false)
-            ?.getIntExtra(Intent.EXTRA_DOCK_STATE, -1)
-            ?: return false
+    fun currentPowerStatus(): PowerStatus = statusOf(stickyPlugType(), stickyDockState())
 
-        return dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED
-    }
+    /** Plug type (BatteryManager.BATTERY_PLUGGED_*) from the sticky ACTION_BATTERY_CHANGED. */
+    private fun stickyPlugType(): Int =
+        stickyIntent(Intent.ACTION_BATTERY_CHANGED)
+            ?.getIntExtra(BatteryManager.EXTRA_PLUGGED, PLUG_TYPE_NONE)
+            ?: PLUG_TYPE_NONE
+
+    /** Dock state (Intent.EXTRA_DOCK_STATE_*) from the sticky ACTION_DOCK_EVENT. */
+    private fun stickyDockState(): Int =
+        stickyIntent(Intent.ACTION_DOCK_EVENT)
+            ?.getIntExtra(Intent.EXTRA_DOCK_STATE, DOCK_STATE_UNKNOWN)
+            ?: DOCK_STATE_UNKNOWN
 
     /**
-     * Retrieve the current state of the USB port via sticky broadcasts and return whether we are actually
-     * plugged in or not.
-     */
-    private fun isPluggedIn(): Boolean {
-        val chargePlugState = getStateIntent(checkingBatteryState = true)
-            ?.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
-            ?: return false
-
-        return chargePlugState == BatteryManager.BATTERY_PLUGGED_AC
-                || chargePlugState == BatteryManager.BATTERY_PLUGGED_USB
-    }
-
-    /**
-     * Check if the device is currently wirelessly charging. Same logic as isPluggedIn()
-     */
-    private fun isWirelesslyCharging(): Boolean {
-        val chargePlugState = getStateIntent(checkingBatteryState = true)
-            ?.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
-            ?: return false
-
-        return chargePlugState == BatteryManager.BATTERY_PLUGGED_WIRELESS
-    }
-
-    /**
-     * Retrieve the "sticky" Intent of either Battery State or Dock State, used for checking current
-     * power status of the device.
-     *
      * "Sticky" broadcast Intents can be retrieved immediately by passing a null BroadcastReceiver.
      */
-    private fun getStateIntent(checkingBatteryState: Boolean): Intent? {
-        val intentFilter = IntentFilter(
-            if (checkingBatteryState) Intent.ACTION_BATTERY_CHANGED else Intent.ACTION_DOCK_EVENT
-        )
-        return context.registerReceiver(null, intentFilter)
-    }
+    private fun stickyIntent(action: String): Intent? =
+        context.registerReceiver(null, IntentFilter(action))
 
     // endregion
 }

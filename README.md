@@ -109,7 +109,7 @@ app, in the idioms it would have been written in today:
 | State | SharedPreferences + LocalBroadcastManager | DataStore + Kotlin Flows + ViewModel |
 | Assets | 16 PNGs + vectors | **Vector only**, incl. a themed (monochrome) launcher icon |
 | Min Android | 5.0 | 12 |
-| Release APK | ~5 MB | **~1.5 MB** |
+| Release build | Unminified APK | **3.4 MB APK / 2.6 MB AAB**, R8-minified |
 
 The code is organised in four layers, one-way dependencies (`ui` → `data` → `model`,
 `service` → `data` → `model`):
