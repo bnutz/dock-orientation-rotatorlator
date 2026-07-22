@@ -1,8 +1,9 @@
 [versions]
-# Toolchain: AGP 8.7.3 + Gradle 8.9 + JDK 17 — the fleet baseline (same as vpn-toggleroo).
-# Do NOT chase AGP 8.9 / compileSdk 36 during the overhaul; that's a separate later step
-# (see Jotty: "Dock Orientation Rotatorlator - 2026 Overhaul Workplan").
-agp = "8.7.3"
+# Toolchain: AGP 8.13.2 + Gradle 8.14.5 + JDK 17.
+# Bumped off the 8.7.3/8.9 fleet baseline for compileSdk/targetSdk 36 (Play's Android 16
+# requirement): compileSdk 36 needs AGP >= 8.9.1 (8.7.3 caps at 35), and AGP 8.13 needs
+# Gradle >= 8.13. Staying on AGP 8.x keeps JDK 17 — AGP 9 would require JDK 21.
+agp = "8.13.2"
 kotlin = "2.0.21"
 
 core = "1.15.0"

@@ -1,0 +1,18 @@
+<!--
+    The "minimise" dash for the FAB — the 2018 app's ic_remove_white, restored.
+
+    No android:tint here (the original hardcoded #FFFFFF): Compose's Icon() tints with the
+    current content colour, so the FAB follows the Material You scheme.
+-->
+<vector
+    android:height="24dp"
+    android:width="24dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M19,13H5v-2h14v2z"
+        />
+</vector>

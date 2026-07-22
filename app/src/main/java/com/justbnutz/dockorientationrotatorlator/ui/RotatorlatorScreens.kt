@@ -65,7 +65,7 @@
  *    └── MainScreen                 ← the real screen
  *         └── Scaffold              ← Material 3 page frame (top bar + FAB + content)
  *              ├── TopAppBar        ← title + overflow DropdownMenu
- *              ├── FloatingActionButton
+ *              ├── FloatingActionButton  ← leave the app (dash if monitoring, else cross)
  *              └── Column           ← the scrolling content, in order:
  *                   ├── StatusCard      (what the device is doing RIGHT NOW)
  *                   ├── MonitorCard     (the master on/off switch)
@@ -369,10 +369,27 @@ private fun MainScreen(viewModel: RotatorlatorViewModel, onExit: () -> Unit) {
             )
         },
         floatingActionButton = {
-            // "Exit" the app — the same job as the 2018 minimise FAB. (The monitoring
-            // Service keeps running; that's the whole point of the app.)
+            // Leaves the app. The icon reflects what that MEANS right now, which is the
+            // 2018 behaviour restored:
+            //   monitoring ON  → a dash. Something of ours is still running in the
+            //                    background, so you're minimising, not quitting.
+            //   monitoring OFF → a cross. Nothing is left running; you're closing it.
+            // (Neither literally minimises or kills the process — this is about matching
+            // the user's mental model, not the Activity lifecycle.)
+            val monitoring = prefs?.monitorEnabled == true
+
             FloatingActionButton(onClick = onExit) {
-                Icon(Icons.Default.Close, contentDescription = null)
+                if (monitoring) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_remove_black),
+                        contentDescription = stringResource(R.string.btn_minimise)
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.btn_close)
+                    )
+                }
             }
         }
     ) { padding ->

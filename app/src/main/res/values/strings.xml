@@ -25,6 +25,10 @@
 
     <string name="btn_stop_monitoring">Stop Monitoring</string>
 
+    <!-- FAB: dash while the monitor service is running (minimising), cross when it isn't -->
+    <string name="btn_minimise">Minimise</string>
+    <string name="btn_close">Close</string>
+
     <string name="mnu_open_source">Source Code</string>
     <string name="mnu_play_store">Play Store</string>
     <string name="mnu_show_wireless_options">Show Wireless Option</string>

@@ -10,18 +10,20 @@ plugins {
 
 android {
     namespace = "com.justbnutz.dockorientationrotatorlator"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.justbnutz.dockorientationrotatorlator"
         // 31 (Android 12): sole active user is on Android 17 devices — this deletes the
         // pre-Oreo receiver path and every pre-31 version gate (overhaul Decision 1)
         minSdk = 31
-        targetSdk = 35
+        // 36 (Android 16): required by Play for app updates. compileSdk must match —
+        // you cannot target an API you don't compile against.
+        targetSdk = 36
         // versionCode: plain +1 per release. versionName: build timestamp to the
         // minute, vYYYYMMDD.HHMM — the only version label that matters here.
-        versionCode = 8
-        versionName = "v20260714.0159"
+        versionCode = 9
+        versionName = "v20260722.1221"
     }
 
     signingConfigs {
